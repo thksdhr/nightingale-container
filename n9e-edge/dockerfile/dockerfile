@@ -1,0 +1,18 @@
+FROM ubuntu:noble
+
+LABEL By="taoziG"
+
+RUN ["apt", "update"]
+RUN ["apt", "install", "-y", "ca-certificates", "tzdata", "curl"]
+
+# 设置默认时区为上海，可通过环境变量TZ覆盖
+ENV TZ=Asia/Shanghai
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+WORKDIR /n9e-edge
+COPY ./n9e-edge /n9e-edge
+RUN chmod +x *.sh
+
+# 设置 程序入口
+# ENTRYPOINT ["./docker-entrypoint.sh"]
+CMD ["/n9e-edge/n9e-edge","-configs","/n9e-edge/etc"]
