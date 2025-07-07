@@ -5,23 +5,29 @@ SHELL_PATH=$(readlink -f "${BASH_SOURCE[0]}"); SHELL_DIR=$(dirname $SHELL_PATH);
 apt update && apt install -y jq
 
 # download file
-echo "downloadging..."
+echo "NowPath=$(pwd) downloadging..."
 N9E_TAG=$(curl -s https://api.github.com/repos/ccfos/nightingale/releases/latest | jq -r '.tag_name')
+if [ -z "$N9E_TAG" ]; then
+  echo "获取最新版本失败"
+  exit 1
+fi
 echo "N9E_TAG: $N9E_TAG"
-wget -O ${SHELL_DIR}/temp/n9e.tar.gz https://github.com/ccfos/nightingale/releases/download/${N9E_TAG}/n9e-${N9E_TAG}-linux-amd64.tar.gz
+wget -O ./temp/n9e.tar.gz https://github.com/ccfos/nightingale/releases/download/${N9E_TAG}/n9e-${N9E_TAG}-linux-amd64.tar.gz
 
 # switch work directory
 echo "switch work directory..."
-cd ${SHELL_DIR}/temp/
+cd ./temp/
 echo "current work directory: $(pwd)"
 
 # uzip
 tar -zxvf n9e.tar.gz
 
 # cp file
-echo "cp file..."
-cp -f ${SHELL_DIR}/temp/n9e-edge ${SHELL_DIR}/n9e-edge/n9e-edge
-cp -f ${SHELL_DIR}/temp/etc/edge/edge.toml ${SHELL_DIR}/n9e-edge/etc/edge.toml
+echo "switch work directory..."
+cd ${SHELL_DIR}
+echo "NowPath=$(pwd) cp file..."
+cp -f ./temp/n9e-edge ./n9e-edge/n9e-edge
+cp -f ./temp/etc/edge/edge.toml ./n9e-edge/etc/edge.toml
 
 # done
 echo "done"
