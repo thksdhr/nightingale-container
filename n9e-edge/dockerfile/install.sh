@@ -2,7 +2,7 @@
 SHELL_PATH=$(readlink -f "${BASH_SOURCE[0]}"); SHELL_DIR=$(dirname $SHELL_PATH); cd "$SHELL_DIR" || { echo "切换工作目录失败"; exit 1; }
 
 # download jq
-apt update && apt install -y jq
+sudo apt update && sudo apt install -y jq
 
 # download file
 echo "downloadging..."
@@ -12,7 +12,7 @@ wget -O ${SHELL_DIR}/temp/n9e.tar.gz https://github.com/ccfos/nightingale/releas
 
 # switch work directory
 echo "switch work directory..."
-cd ${SHELL_DIR}/temp
+cd ${SHELL_DIR}/temp/
 echo "current work directory: $(pwd)"
 
 # uzip
