@@ -16,18 +16,20 @@ wget -O ./temp/n9e.tar.gz https://github.com/ccfos/nightingale/releases/download
 
 # switch work directory
 echo "switch work directory..."
-cd ./temp/
-echo "current work directory: $(pwd) LS: $(ls -al)"
+cd ${SHELL_DIR}/temp
+echo "current work directory: $(pwd)"
 
 # uzip
 tar -zxvf n9e.tar.gz
 
 # cp file
 echo "switch work directory..."
-cd ${SHELL_DIR}
 echo "NowPath=$(pwd) cp file..."
-cp -f ./temp/n9e-edge ./n9e-edge/n9e-edge
-cp -f ./temp/etc/edge/edge.toml ./n9e-edge/etc/edge.toml
+cp -f ${SHELL_DIR}/temp/n9e-edge ${SHELL_DIR}/n9e-edge/n9e-edge
+cp -f ${SHELL_DIR}/temp/etc/edge/edge.toml ${SHELL_DIR}/n9e-edge/etc/edge.toml
 
 # done
+echo "Display Files"
+ls -alh ${SHELL_DIR}/n9e-edge
+ls -alh ${SHELL_DIR}/n9e-edge/etc
 echo "done"
