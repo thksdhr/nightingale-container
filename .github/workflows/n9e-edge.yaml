@@ -22,7 +22,7 @@ jobs:
             -
                 name: "获取N9E文件"
                 run: |
-                    ./n9e-edge/dockerfile/install.sh
+                    sudo ./n9e-edge/dockerfile/install.sh
             -
                 name: "登录 Docker Hub"
                 uses: docker/login-action@v3

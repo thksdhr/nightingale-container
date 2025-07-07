@@ -2,7 +2,7 @@
 SHELL_PATH=$(readlink -f "${BASH_SOURCE[0]}"); SHELL_DIR=$(dirname $SHELL_PATH); cd "$SHELL_DIR" || { echo "切换工作目录失败"; exit 1; }
 
 # download jq
-sudo apt update && sudo apt install -y jq
+apt update && apt install -y jq
 
 # download file
 echo "downloadging..."
