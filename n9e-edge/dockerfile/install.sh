@@ -17,7 +17,7 @@ wget -O ./temp/n9e.tar.gz https://github.com/ccfos/nightingale/releases/download
 # switch work directory
 echo "switch work directory..."
 cd ./temp/
-echo "current work directory: $(pwd)"
+echo "current work directory: $(pwd) LS: $(ls -al)"
 
 # uzip
 tar -zxvf n9e.tar.gz
