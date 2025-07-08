@@ -1,0 +1,10 @@
+# ALL ZIP
+*.tgz
+*.tar.gz
+
+
+# temp floder
+/n9e-edge/dockerfile/temp/
+
+# local test file
+/n9e-edge/dockerfile/n9e-edge/n9e-edge

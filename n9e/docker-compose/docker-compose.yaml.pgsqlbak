@@ -1,0 +1,78 @@
+networks:
+  nightingale:
+    driver: bridge
+
+services:
+  postgres:
+    # platform: linux/x86_64
+    image: "postgres:12-alpine"
+    container_name: n9e-postgres
+    hostname: postgres
+    restart: always
+    networks:
+      - nightingale
+    ports:
+      - "5432:5432"
+    environment:
+      TZ: Asia/Shanghai
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: n9e_v6
+      PGDATA: /volumes
+    volumes:
+      - ./volumes/postgres/data:/volumes
+      - ./volumes/postgres/initsql:/docker-entrypoint-initdb.d/
+  redis:
+    image: "redis:7.0-alpine"
+    container_name: n9e-redis
+    hostname: redis
+    restart: always
+    networks:
+      - nightingale
+    ports:
+      - "6379:6379"
+    environment:
+      TZ: Asia/Shanghai
+
+  victoriametrics:
+    image: victoriametrics/victoria-metrics:latest
+    container_name: n9e-victoriametrics
+    hostname: victoriametrics
+    restart: always
+    networks:
+      - nightingale
+    environment:
+      TZ: Asia/Shanghai
+    volumes:
+      - ./volumes/victoriametrics:/volumes
+    command:
+      - "-httpListenAddr=:8428"
+      - "-loggerTimezone=Asia/Shanghai"
+      - "-storageDataPath=/volumes"
+      - "-retentionPeriod=1y"
+
+  nightingale:
+    image: flashcatcloud/nightingale:latest
+    container_name: n9e-nightingale
+    hostname: nightingale
+    restart: always
+    networks:
+      - nightingale
+    ports:
+      - "17000:17000"
+    environment:
+      GIN_MODE: release
+      TZ: Asia/Shanghai
+      WAIT_HOSTS: postgres:5432, redis:6379
+    volumes:
+      - ./volumes/n9e:/app/etc
+    depends_on:
+      - postgres
+      - redis
+      - victoriametrics
+    links:
+      - postgres:postgres
+      - redis:redis
+      - victoriametrics:victoriametrics
+    command: >
+      sh -c "/app/n9e"

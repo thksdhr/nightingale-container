@@ -4,6 +4,10 @@ SHELL_PATH=$(readlink -f "${BASH_SOURCE[0]}"); SHELL_DIR=$(dirname $SHELL_PATH);
 # download jq
 apt update && apt install -y jq
 
+# mkdir
+mkdir -p ${SHELL_DIR}/temp
+mkdir -p ${SHELL_DIR}/n9e-edge/etc
+
 # download file
 echo "NowPath=$(pwd) downloadging..."
 N9E_TAG=$(curl -s https://api.github.com/repos/ccfos/nightingale/releases/latest | jq -r '.tag_name')
@@ -16,9 +20,8 @@ wget -O ./temp/n9e.tar.gz https://github.com/ccfos/nightingale/releases/download
 
 # switch work directory
 echo "switch work directory..."
-cd ${SHELL_DIR}/temp
+cd ${SHELL_DIR}/temp || { echo "切换工作目录失败"; exit 1; }
 echo "current work directory: $(pwd)"
-
 # uzip
 tar -zxvf n9e.tar.gz
 

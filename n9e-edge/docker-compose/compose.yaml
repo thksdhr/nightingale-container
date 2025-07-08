@@ -1,5 +1,5 @@
 networks:
-  n9e-edge-net:
+  n9e-edge:
     driver: bridge
 
 services:
@@ -9,40 +9,38 @@ services:
     container_name: taozig-n9e-edge
     restart: unless-stopped
     ports:
-      - "17000:17000"
+      - "19000:19000"
     environment:
       TZ: Asia/Shanghai
     volumes:
       - ./volumes/n9e-edge:/n9e-edge/etc
     networks:
-      - n9e-edge-net
-    #command: ["tail","-f","/dev/null"]
+      - n9e-edge
 
   redis:
     image: "redis:7.0-alpine"
     container_name: n9e-edge-redis
     hostname: redis
     restart: unless-stopped
-    #ports:
-    #  - "6379:6379"
     environment:
       TZ: Asia/Shanghai
     networks:
-      - n9e-edge-net
+      - n9e-edge
 
   victoriametrics:
     image: victoriametrics/victoria-metrics:v1.79.12
     container_name: n9e-edge-victoriametrics
     hostname: victoriametrics
     restart: unless-stopped
-    #ports:
-    #  - "8428:8428"
+    # 非加密端口，本地使用，不出公网
+    ports:
+      - "8428:8428"
     environment:
       TZ: Asia/Shanghai
     volumes:
       - ./volumes/victoriametrics:/storage
     networks:
-      - n9e-edge-net
+      - n9e-edge
     command:
       - "--loggerTimezone=Asia/Shanghai"
       - "--storageDataPath=/storage"
@@ -52,6 +50,7 @@ services:
     container_name: n9e-edge-vmauth
     hostname: vmauth
     restart: unless-stopped
+    # 时序库加密传输端口
     ports:
       - "8427:8427"
     environment:
@@ -59,7 +58,10 @@ services:
     volumes:
       - ./volumes/vmauth:/volumes
     networks:
-      - n9e-edge-net
+      - n9e-edge
     command:
-      - "-auth.config=/volumes/config.yml"
+      # - "-auth.config=/volumes/config.yml"
       - "--loggerTimezone=Asia/Shanghai"
+      - "-loggerLevel=INFO"
+      - "-httpAuth.username=taozig"
+      - "-httpAuth.password=abcd1234"
