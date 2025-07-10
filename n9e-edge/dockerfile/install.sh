@@ -6,7 +6,6 @@ apt update && apt install -y jq
 
 # mkdir
 mkdir -p ${SHELL_DIR}/temp
-mkdir -p ${SHELL_DIR}/n9e-edge/etc
 
 # download file
 echo "NowPath=$(pwd) downloadging..."
@@ -25,14 +24,7 @@ echo "current work directory: $(pwd)"
 # uzip
 tar -zxvf n9e.tar.gz
 
-# cp file
-echo "switch work directory..."
-echo "NowPath=$(pwd) cp file..."
-cp -f ${SHELL_DIR}/temp/n9e-edge ${SHELL_DIR}/n9e-edge/n9e-edge
-cp -f ${SHELL_DIR}/temp/etc/edge/edge.toml ${SHELL_DIR}/n9e-edge/etc/edge.toml
-
 # done
 echo "Display Files"
-ls -alh ${SHELL_DIR}/n9e-edge
-ls -alh ${SHELL_DIR}/n9e-edge/etc
+ls -alh ${SHELL_DIR}/temp
 echo "done"

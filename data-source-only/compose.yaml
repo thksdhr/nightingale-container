@@ -1,0 +1,41 @@
+networks:
+  victoriametrics-single:
+    driver: bridge
+
+services:
+  victoriametrics:
+    image: victoriametrics/victoria-metrics:latest
+    container_name: victoriametrics-single
+    hostname: victoriametrics
+    restart: unless-stopped
+    networks:
+      - victoriametrics-single
+    ports:
+      - "8428:8428"
+    environment:
+      TZ: Asia/Shanghai
+    volumes:
+      - ./volumes/victoriametrics:/volumes
+    command:
+      - "-httpListenAddr=:8428"
+      - "--loggerTimezone=Asia/Shanghai"
+      - "--storageDataPath=/volumes"
+      - "-retentionPeriod=3y"
+
+  vmauth:
+    image: victoriametrics/vmauth:latest
+    container_name: vmauth
+    hostname: vmauth
+    restart: unless-stopped
+    networks:
+      - victoriametrics-single
+    ports:
+      - "8427:8427"
+    environment:
+      TZ: Asia/Shanghai
+    volumes:
+      - ./volumes/vmauth:/volumes
+    command:
+      - "--loggerTimezone=Asia/Shanghai"
+      - "-loggerLevel=INFO"
+      - "-auth.config=/volumes/config.yml"
