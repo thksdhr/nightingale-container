@@ -18,8 +18,8 @@ services:
       - ./volumes/victoriametrics:/volumes
     command:
       - "-httpListenAddr=:8428"
-      - "--loggerTimezone=Asia/Shanghai"
-      - "--storageDataPath=/volumes"
+      - "-loggerTimezone=Asia/Shanghai"
+      - "-storageDataPath=/volumes"
       - "-retentionPeriod=3y"
 
   vmauth:
@@ -36,6 +36,6 @@ services:
     volumes:
       - ./volumes/vmauth:/volumes
     command:
-      - "--loggerTimezone=Asia/Shanghai"
+      - "-loggerTimezone=Asia/Shanghai"
       - "-loggerLevel=INFO"
       - "-auth.config=/volumes/config.yml"

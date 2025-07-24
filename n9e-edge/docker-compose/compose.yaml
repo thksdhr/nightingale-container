@@ -61,6 +61,6 @@ services:
     volumes:
       - ./volumes/vmauth:/volumes
     command:
-      - "--loggerTimezone=Asia/Shanghai"
+      - "-loggerTimezone=Asia/Shanghai"
       - "-loggerLevel=INFO"
       - "-auth.config=/volumes/config.yml"
