@@ -6,7 +6,7 @@ cd "$SHELL_DIR" || { echo "切换工作目录失败"; exit 1; }
 TAG="v9.0.0-beta.3"
 
 # 创建多平台构建器
-docker buildx create \
+sudo docker buildx create \
   --name container-builder \
   --driver docker-container \
   --bootstrap --use
