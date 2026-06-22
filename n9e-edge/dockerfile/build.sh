@@ -3,7 +3,7 @@ SHELL_PATH=$(readlink -f "${BASH_SOURCE[0]}"); echo "SHELL_PATH=[$SHELL_PATH]"; 
 cd "$SHELL_DIR" || { echo "切换工作目录失败"; exit 1; }
 
 # ENV
-TAG="v8.5.1"
+TAG="v9.0.0-beta.3"
 
 # build
 echo "开始构建n9e-edge镜像..."
