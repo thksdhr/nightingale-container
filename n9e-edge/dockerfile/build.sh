@@ -6,13 +6,9 @@ cd "$SHELL_DIR" || { echo "切换工作目录失败"; exit 1; }
 TAG="v9.0.0-beta.3"
 
 # build
-echo "开始构建n9e-edge镜像..."
-docker build -t taozig/n9e-edge:latest -f ./dockerfile --no-cache --pull ./
-docker tag taozig/n9e-edge:latest taozig/n9e-edge:"${TAG}"
-
-echo "镜像构建完成，开始推送到Docker Hub..."
-docker push taozig/n9e-edge:latest
-docker push taozig/n9e-edge:"${TAG}"
-
-echo "保存镜像到本地文件..."
-docker save taozig/n9e-edge:"${TAG}" -o n9e-edge.tar
+echo "开始构建n9e-edge[amd64]镜像..."
+sudo docker buildx build \
+    --platform linux/amd64,linux/arm64 \
+    -t taozig/n9e-edge:latest \
+    -t taozig/n9e-edge:"${TAG}" \
+    -f ./Dockerfile --no-cache --push ./

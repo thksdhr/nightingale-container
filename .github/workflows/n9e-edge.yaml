@@ -27,8 +27,3 @@ jobs:
               run: |
                   pwd
                   ./n9e-edge/dockerfile/build.sh
-            - name: "上传 Docker 镜像至 GitHub"
-              uses: actions/upload-artifact@v4
-              with:
-                  name: n9e-edge.tar
-                  path: ./n9e-edge/dockerfile/n9e-edge.tar
