@@ -19,7 +19,7 @@ jobs:
         run: |
           sudo ./n9e-edge/dockerfile/install.sh
       - name: "登录 Docker Hub"
-        run: sudo docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+        run: echo ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }} | sudo docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
       - name: "构建和推送 Docker 镜像"
         run: |
           pwd
