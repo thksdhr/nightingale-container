@@ -3,7 +3,7 @@ SHELL_PATH=$(readlink -f "${BASH_SOURCE[0]}"); echo "SHELL_PATH=[$SHELL_PATH]"; 
 cd "$SHELL_DIR" || { echo "切换工作目录失败"; exit 1; }
 
 # ENV
-TAG="v9.0.0-beta.3"
+TAG="v9.0.0-beta.4"
 
 # 创建多平台构建器
 sudo docker buildx create \
@@ -12,7 +12,7 @@ sudo docker buildx create \
   --bootstrap --use
 
 # 开始构建
-echo "开始构建n9e-edge[amd64]镜像..."
+echo "开始构建n9e-edge[amd64,arm64]镜像..."
 sudo docker buildx build \
     --platform linux/amd64,linux/arm64 \
     -t taozig/n9e-edge:latest \
