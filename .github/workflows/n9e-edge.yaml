@@ -13,14 +13,13 @@ jobs:
 
       - name: "获取 Build 文件"
         uses: actions/checkout@v4
+
       - name: "获取当前工作目录"
         run: ls -la
+
+      - name: "登录 Docker Hub"
+        run: echo ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }} | docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
+
       - name: "获取N9E文件"
         run: |
-          sudo ./n9e-edge/dockerfile/install.sh
-      - name: "登录 Docker Hub"
-        run: echo ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }} | sudo docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
-      - name: "构建和推送 Docker 镜像"
-        run: |
-          pwd
-          ./n9e-edge/dockerfile/build.sh
+          ./n9e-edge/dockerfile/install.sh
