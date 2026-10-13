@@ -4,7 +4,7 @@ SHELL_PATH=$(readlink -f "${BASH_SOURCE[0]}"); SHELL_DIR=$(dirname "$SHELL_PATH"
 # 变量设置:
 # 获取最新标签:
 # curl -s https://api.github.com/repos/ccfos/nightingale/releases/latest | jq -r '.tag_name'
-N9E_TAG="v9.1.1"
+N9E_TAG="v9.2.0"
 
 
 
