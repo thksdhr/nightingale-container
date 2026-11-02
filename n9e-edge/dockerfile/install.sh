@@ -53,4 +53,6 @@ docker buildx build \
     --platform linux/amd64,linux/arm64 \
     -t taozig/n9e-edge:latest \
     -t taozig/n9e-edge:"${N9E_TAG}" \
+    -t crpi-nb4joqb2ycvq3qqu.cn-chengdu.personal.cr.aliyuncs.com/taozig/n9e-edge:latest" \
+    -t crpi-nb4joqb2ycvq3qqu.cn-chengdu.personal.cr.aliyuncs.com/taozig/n9e-edge:"${N9E_TAG}" \
     -f ./Dockerfile --no-cache --push ./
