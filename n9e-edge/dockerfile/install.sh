@@ -24,9 +24,9 @@ echo "NowPath=$(pwd) downloadging..."
 echo "当前版本: $N9E_TAG"
 echo "开始下载 amd64 和 arm64 文件..."
 echo "下载 [https://github.com/ccfos/nightingale/releases/download/${N9E_TAG}/n9e-${N9E_TAG}-linux-amd64.tar.gz] 文件..."
-wget -q --show-progress -O ./temp/n9e.amd64.tar.gz https://github.com/ccfos/nightingale/releases/download/${N9E_TAG}/n9e-${N9E_TAG}-linux-amd64.tar.gz
+wget -q -O ./temp/n9e.amd64.tar.gz https://github.com/ccfos/nightingale/releases/download/${N9E_TAG}/n9e-${N9E_TAG}-linux-amd64.tar.gz
 echo "下载 [https://github.com/ccfos/nightingale/releases/download/${N9E_TAG}/n9e-${N9E_TAG}-linux-arm64.tar.gz] 文件..."
-wget -q --show-progress -O ./temp/n9e.arm64.tar.gz https://github.com/ccfos/nightingale/releases/download/${N9E_TAG}/n9e-${N9E_TAG}-linux-arm64.tar.gz
+wget -q -O ./temp/n9e.arm64.tar.gz https://github.com/ccfos/nightingale/releases/download/${N9E_TAG}/n9e-${N9E_TAG}-linux-arm64.tar.gz
 
 echo "切换工作目录..."
 cd "${SHELL_DIR}"/temp || { echo "切换工作目录失败"; exit 1; }
@@ -51,9 +51,12 @@ docker buildx create \
   --bootstrap --use
 
 # Docker 开始构建 Image
+# --provenance=false --sbom=false 为兼容阿里云镜像仓库, 关闭生成: "构建来源证明、软件物料清单"
 echo "开始构建n9e-edge[amd64,arm64]镜像..."
 docker buildx build \
     --platform linux/amd64,linux/arm64 \
+    --provenance=false \
+    --sbom=false \
     -t taozig/n9e-edge:latest \
     -t taozig/n9e-edge:"${N9E_TAG}" \
     -t crpi-nb4joqb2ycvq3qqu.cn-chengdu.personal.cr.aliyuncs.com/taozig/n9e-edge:latest \
