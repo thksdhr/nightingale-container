@@ -1,4 +1,7 @@
 #!/bin/bash
+# 启用严格模式
+set -Eeuo pipefail
+
 SHELL_PATH=$(readlink -f "${BASH_SOURCE[0]}"); SHELL_DIR=$(dirname "$SHELL_PATH"); cd "$SHELL_DIR" || { echo "切换工作目录失败"; exit 1; }
 
 # 变量设置:
@@ -53,6 +56,6 @@ docker buildx build \
     --platform linux/amd64,linux/arm64 \
     -t taozig/n9e-edge:latest \
     -t taozig/n9e-edge:"${N9E_TAG}" \
-    -t crpi-nb4joqb2ycvq3qqu.cn-chengdu.personal.cr.aliyuncs.com/taozig/n9e-edge:latest" \
+    -t crpi-nb4joqb2ycvq3qqu.cn-chengdu.personal.cr.aliyuncs.com/taozig/n9e-edge:latest \
     -t crpi-nb4joqb2ycvq3qqu.cn-chengdu.personal.cr.aliyuncs.com/taozig/n9e-edge:"${N9E_TAG}" \
     -f ./Dockerfile --no-cache --push ./
