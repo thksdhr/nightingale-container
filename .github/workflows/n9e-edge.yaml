@@ -21,8 +21,11 @@ jobs:
         run: echo ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }} | docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
 
       - name: "登录阿里云容器镜像服务"
-        run: echo ${{ secrets.ALIYUNCS_HUB_ACCESS_TOKEN }} | docker login -u ${{ secrets.ALIYUNCS_HUB_USERNAME }} --password-stdin
+        run: echo ${{ secrets.ALIYUNCS_HUB_ACCESS_TOKEN }} | docker login crpi-nb4joqb2ycvq3qqu.cn-chengdu.personal.cr.aliyuncs.com -u ${{ secrets.ALIYUNCS_HUB_USERNAME }} --password-stdin
 
       - name: "获取N9E文件"
         run: |
           ./n9e-edge/dockerfile/install.sh
+
+      - name: "清理临时凭证"
+        run: rm -rf /home/runner/.docker/config.json
